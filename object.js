@@ -36,11 +36,15 @@ class Obj extends drawable {
         if (this.shouldCastRays) { //basically only the real object needs this
             
             if (isConvex) {
-
-                let crossPoint = this.getRayCross([[this.x, this.y-(this.height/2)], [center[0], center[1]]], [[center[0], this.y-(this.height/2)], Fr]);
-                let ray1 = new Ray([[tx, this.y-(this.height/2)], [center[0], center[1]], crossPoint]);
-                let ray2 = new Ray([[tx, this.y-(this.height/2)], [center[0], this.y-(this.height/2)], crossPoint]);
+                let crossPoint = this.getRayCross([[tx, this.y-(this.height/2)], [center[0], center[1]]], [[center[0], this.y-(this.height/2)], [Fr[0] + leftBuffer, Fr[1]]]);
+                let isVirtual = false; //temporary
+                if (crossPoint[0] < tx) {
+                    isVirtual = true;
+                }
+                let ray1 = new Ray([[tx, this.y-(this.height/2)], [center[0], center[1]], crossPoint], isVirtual);
+                let ray2 = new Ray([[tx, this.y-(this.height/2)], [center[0], this.y-(this.height/2)], crossPoint], isVirtual);
                 let resultingObject = new Obj(15, crossPoint[1]-center[1], crossPoint[0], center[1]+ (0.5*(crossPoint[1]-center[1])), true, "rgb(255, 51, 255)", false, true)
+
             }
         }
     }

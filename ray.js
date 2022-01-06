@@ -1,11 +1,12 @@
 class Ray extends drawable {
-    constructor(points) {
+    constructor(points, isVirtual) {
         super()
+        this.isVirtual = isVirtual;
         this.points = points
         this.generate()
     }
     generate() {
-        this.generateDashedLines(true);
+        this.generateDashedLines(!this.isVirtual);
         super.generate();
     }
 
